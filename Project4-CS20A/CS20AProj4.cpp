@@ -57,7 +57,42 @@ void flip(Node* root) {
 void printFrequentNames(string filename, int threshold) {
 		
 	// Your code here
+	fstream studentsFile;
+	string first;
+
+	studentsFile.open(filename);
+	if (!studentsFile.is_open())
+		cerr << "Error opening file." << endl;
 	
+	map<string, int> nameCounts;
+	map<string, int>::iterator itr;
+	string line, firstName;
+
+	while (!studentsFile.eof()) {
+		getline(studentsFile, line);
+		firstName = line.substr(0, line.find(' '));
+
+		itr = nameCounts.find(firstName);
+		if (itr != nameCounts.end()) {// if name is found, increment counter
+			itr->second++;
+		}
+		else
+			nameCounts.insert(pair<string, int>(firstName, 1));
+	}
+	ofstream output("firstName_and_Counts.txt");
+	for (itr = nameCounts.begin(); itr != nameCounts.end(); itr++) {
+		if (itr->second <= threshold) {
+			output << itr->first;
+
+			for (int i = 0; i < 20 - (itr->first).length(); i++)
+				output << " ";
+			output << itr->second << endl;
+		}
+
+	}
+
+	output.close();
+	studentsFile.close();
 }
 
 int main() {
@@ -95,8 +130,8 @@ int main() {
 	// setSize(&a);
 	
 
-	// cout << "Most frequent first names:" << endl;
-	// printFrequentNames("uc_students.txt", 300);
+	cout << "Most frequent first names:" << endl;
+	printFrequentNames("uc_students.txt", 300);
 	
 	return 0;
 }
