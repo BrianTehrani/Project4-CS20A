@@ -28,5 +28,8 @@
     <Text Include="uc_students.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="firstName_and_Counts.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

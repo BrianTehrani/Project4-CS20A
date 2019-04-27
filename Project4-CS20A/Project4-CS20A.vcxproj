@@ -121,6 +121,7 @@
     <None Include="Project4.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="firstName_and_Counts.txt" />
     <Text Include="uc_students.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
