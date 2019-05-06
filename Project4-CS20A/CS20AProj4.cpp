@@ -1,6 +1,6 @@
 //============================================================================
 // Name        : CS20AProj4.cpp
-// Author      : 
+// Author      : Brian Tehrani
 //============================================================================
 
 #include <iostream>
@@ -29,11 +29,23 @@ struct Node {
 int longestPath(Node* root) {
 
 	// Your code here
-	if (root == NULL)
-		return;
-	cout << root->data;
-	longestPath(root->left);
-	longestPath(root->right);
+	
+	// Pre-order traversal
+	if (root == NULL) {
+		return 0;
+	}
+	cout << root->data << endl;
+	int left  = longestPath(root->left);
+	int right =	longestPath(root->right);
+	int leftMAX = 0, rightMAX = 0;
+
+	if (root->left != NULL)
+		leftMAX = left + 1; 
+	if (root->right != NULL)
+		rightMAX = right + 1;
+	
+	return max(leftMAX, rightMAX);
+	
 }
 
 /*
@@ -42,7 +54,11 @@ int longestPath(Node* root) {
 void setSize(Node* root) {
 	
 	// Your code here
-	
+	if (root == NULL)
+		return;
+	else if (root->left == NULL || root->right == NULL) {
+
+	}
 }
 
 /*
@@ -51,7 +67,24 @@ void setSize(Node* root) {
 void flip(Node* root) {
 	
 	// Your code here
+	if (root == NULL)
+		return;
+
+	//Create temp node to store left node of root
+	//1 is an arbitrary temp  value as constructor demands
+	Node temp(1); 
+
+	flip(root->left);
+	flip(root->right);
 	
+	//swap of nodes left with right
+	//could have also used swap function
+	temp.left = root->left;
+	root->left = root->right;
+	root->right = temp.left;
+
+
+
 }
 
 /*
@@ -123,18 +156,19 @@ int main() {
   // functions work correctly is by doing a preOrder traversal.
   
 	// Node a(1);
+	// make other nodes and link them
+	// ...
 	Node a(1), b(2), c(3), d(4), e(5), f(6), g(7);
 	a.left = &b; a.right = &c;
 	b.left = &d;
 	c.left = &e; c.right = &f;
 	f.right = &g;
-	// make other nodes and link them
-	// ...
-
-	cout << "Longest path " << longestPath(&a) << endl;
-
-	// flip(&a);
 	
+	//Used before flip to prtint pre-order tree
+	longestPath(&a);
+
+	flip(&a);
+	cout << "Longest path " << longestPath(&a) << endl;
 	// setSize(&a);
 	
 
