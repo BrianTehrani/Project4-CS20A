@@ -34,7 +34,7 @@ int longestPath(Node* root) {
 	if (root == NULL) {
 		return 0;
 	}
-	cout << root->data << endl;
+	cout << root->data << ' ';
 	int left  = longestPath(root->left);
 	int right =	longestPath(root->right);
 	int leftMAX = 0, rightMAX = 0;
@@ -54,11 +54,26 @@ int longestPath(Node* root) {
 void setSize(Node* root) {
 	
 	// Your code here
-	if (root == NULL)
+	if (root == NULL) //Empty tree
 		return;
-	else if (root->left == NULL || root->right == NULL) {
-
+	else if ((root->left == NULL) && (root->right == NULL)) //Leaf Node
+	{
+		root->data = 1;
 	}
+
+	setSize(root->left);
+	setSize(root->right);
+
+	//Post order addition traversal
+	if ((root->right != NULL) && (root->left == NULL))
+		root->data = root->right->data + 1;
+
+	if ((root->left != NULL) && (root->right == NULL))
+		root->data = root->left->data + 1;
+
+	if ((root->left != NULL) && (root->right != NULL))
+		root->data = root->left->data + root->right->data + 1;
+	
 }
 
 /*
@@ -165,11 +180,17 @@ int main() {
 	f.right = &g;
 	
 	//Used before flip to prtint pre-order tree
-	longestPath(&a);
+	cout << "Longest path: " << longestPath(&a) << endl;
 
+	//flip and print the longest path
 	flip(&a);
-	cout << "Longest path " << longestPath(&a) << endl;
-	// setSize(&a);
+	longestPath(&a);
+	cout << "Invert Tree." <<endl;
+
+	//print out sizes of subtrees
+	setSize(&a);
+	longestPath(&a);
+	cout <<"Size of subtrees." <<  endl;
 	
 
 	//cout << "Most frequent first names:" << endl;
