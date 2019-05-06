@@ -29,8 +29,11 @@ struct Node {
 int longestPath(Node* root) {
 
 	// Your code here
-	
-		return 0;
+	if (root == NULL)
+		return;
+	cout << root->data;
+	longestPath(root->left);
+	longestPath(root->right);
 }
 
 /*
@@ -106,13 +109,13 @@ int main() {
 	 */
 
 
-	//		    1
+	//		  1
 	//	     / \
 	//      2   3
 	//     /   / \
 	//    4   5   6
-	//		     \
-	//		     7
+	//			   \
+	//				7
 
   // Test your code by building manually a tree like above, by linking nodes.
   //
@@ -120,18 +123,23 @@ int main() {
   // functions work correctly is by doing a preOrder traversal.
   
 	// Node a(1);
+	Node a(1), b(2), c(3), d(4), e(5), f(6), g(7);
+	a.left = &b; a.right = &c;
+	b.left = &d;
+	c.left = &e; c.right = &f;
+	f.right = &g;
 	// make other nodes and link them
 	// ...
 
-	// cout << "Longest path " << longestPath(&a) << endl;
+	cout << "Longest path " << longestPath(&a) << endl;
 
 	// flip(&a);
 	
 	// setSize(&a);
 	
 
-	cout << "Most frequent first names:" << endl;
-	printFrequentNames("uc_students.txt", 300);
+	//cout << "Most frequent first names:" << endl;
+	//printFrequentNames("uc_students.txt", 300);
 	
 	return 0;
 }
